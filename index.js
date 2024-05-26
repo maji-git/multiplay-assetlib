@@ -53,17 +53,13 @@ router.get('/configure', (req) => {
 router.get('/asset', (req) => {
 	let result = metaData
 
-	console.log(req)
+	console.log(req.query)
 	
 	if (req.query['filter']) {
 		result = result.filter((e) => e.title.search(req.query.filter) != -1)
 	}
 
 	if (req.query['category']) {
-		result = result.filter((e) => e.category_id == req.query.category)
-	}
-
-	if (req.query['support']) {
 		result = result.filter((e) => e.category_id == req.query.category)
 	}
 
