@@ -63,6 +63,13 @@ router.get('/asset', (req) => {
 		result = result.filter((e) => e.category_id == req.query.category)
 	}
 
+	// Exclude Templates
+	if (req.query['type'] && req.query['type'] == "project") {
+		result = result.filter((e) => e.category_id == 4)
+	} else if (req.query['category'] != "4") {
+		result = result.filter((e) => e.category_id != 4)
+	}
+
 	return resJSON({
 		"result": result,
 		"page": 0,
