@@ -103,8 +103,30 @@ export default {
 
 				const metaJSON = (await axios.get(repoMetaURL)).data
 
+				const descBlocks = []
+
+				descBlocks.push(`[font_size=18]About this extension[/font_size]`)
+
+				let t1 = "Compatible MultiPlayCore Version"
+
+				// If this is a template project
+				if (metaJSON.category_id == 4) {
+					t1 = "Using MultiPlay Core Version"
+				}
+
+				descBlocks.push(`[indent]${t1}: ${metaJSON.mpc_version}[/indent]`)
+
+				if (metaJSON.support_level == "testing") {
+					descBlocks.push(`[indent]⚠️ This extension is still in its testing phase.[/indent]`)
+				}
+
+				descBlocks.push(``)
+				descBlocks.push(`[font_size=18]Description[/font_size]`)
+				descBlocks.push(`[indent]${metaJSON.description ?? "This extension doesn't have a description"}[/indent]`)
+
 				metaData.push({
 					...metaJSON,
+					"description": descBlocks.join("\n"),
 					"asset_id": i.toString(),
 					"author_id": metaJSON.author.charCodeAt(0),
 					"category": categories[metaJSON.category_id],
